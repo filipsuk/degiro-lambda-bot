@@ -1,9 +1,15 @@
 # Degiro auto-buy bot
 
+## Configuration
+
+1. Copy `config/autoBuy.ts.example` to `config/autoBuy.ts` and replace values with desired settings.
+2. Copy `.env.example` to `.env` and fill in your degiro credentials.
+
 ## Development
 
-1. install dependencies `yarn` or `npm i`
-2. start serverless-offline `yarn start` or `npm start`
+1. Install dependencies `yarn` or `npm i`
+2. Start serverless-offline `yarn start` or `npm start`
+3. You can invoke the functions by POST requests. For example `POST http://localhost:3002/2015-03-31/functions/degiro-lambda-bot-dev-invest/invocations`
 
 ## Deployment
 

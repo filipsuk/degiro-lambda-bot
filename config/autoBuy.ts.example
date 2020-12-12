@@ -1,0 +1,24 @@
+import { DeGiroProducTypes } from 'degiro-api/dist/enums';
+
+interface AutoBuyConfig {
+  titles: { size: number; name: string; type: DeGiroProducTypes }[];
+  investCurrencyCode: string;
+}
+
+const autoBuyConfig: AutoBuyConfig = {
+  investCurrencyCode: 'EUR',
+  titles: [
+    {
+      name: 'LYXOR NASDAQ 100 UCITS',
+      type: DeGiroProducTypes.etfs,
+      size: 5,
+    },
+    {
+      name: 'VanEck Vectors VideoGaming&eSports UCITS ETF USD A',
+      type: DeGiroProducTypes.etfs,
+      size: 5,
+    },
+  ],
+};
+
+export default autoBuyConfig;
