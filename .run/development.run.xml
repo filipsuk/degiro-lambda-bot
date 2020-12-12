@@ -1,0 +1,8 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="development" type="NodeJSConfigurationType" application-parameters="offline --noTimeout --stage=dev" path-to-node="$USER_HOME$/.nvm/versions/node/v12.17.0/bin/node" node-parameters="--lazy" path-to-js-file="node_modules/.bin/serverless" working-dir="$PROJECT_DIR$">
+    <envs>
+      <env name="TZ" value="UTC" />
+    </envs>
+    <method v="2" />
+  </configuration>
+</component>
