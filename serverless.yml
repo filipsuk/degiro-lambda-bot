@@ -13,6 +13,8 @@ plugins:
 provider:
   name: aws
   runtime: nodejs12.x
+  region: eu-central-1
+  profile: degiro-lambda-bot
   apiGateway:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
     shouldStartNameWithService: true
