@@ -28,3 +28,7 @@ provider:
 functions:
   autoBuy:
     handler: src/autoBuy.handler
+    events:
+      - eventBridge:
+          # https://docs.aws.amazon.com/eventbridge/latest/userguide/scheduled-events.html#cron-expressions
+          schedule: cron(${env:AUTOBUY_CRON_STRING})
