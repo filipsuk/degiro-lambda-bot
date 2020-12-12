@@ -1,5 +1,4 @@
-service:
-  name: degiro-lambda-bot
+service: degiro-lambda-bot
 
 custom:
   webpack:
@@ -16,6 +15,7 @@ provider:
   runtime: nodejs12.x
   apiGateway:
     minimumCompressionSize: 1024 # Enable gzip compression for responses > 1 KB
+    shouldStartNameWithService: true
   environment:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
 
