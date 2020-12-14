@@ -34,6 +34,14 @@ export async function getProductByName({
   return result[0];
 }
 
+export async function waitSeconds(seconds: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, seconds * 1000);
+  });
+}
+
 export async function executePermanentMarketOrder({
   degiro,
   productId,
@@ -51,17 +59,10 @@ export async function executePermanentMarketOrder({
     timeType: DeGiroTimeTypes.PERMANENT,
   };
   console.log('Order input', order);
-
+  await waitSeconds(1);
   const { confirmationId, freeSpaceNew, transactionFees } = await degiro.createOrder(order);
   console.log('Order created', JSON.stringify({ confirmationId, freeSpaceNew, transactionFees }));
+  await waitSeconds(1);
   const orderId = await degiro.executeOrder(order, confirmationId);
   console.log(`Order executed with id: ${orderId}`);
-}
-
-export async function waitSeconds(seconds: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, seconds * 1000);
-  });
 }

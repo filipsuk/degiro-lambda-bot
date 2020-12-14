@@ -9,7 +9,7 @@ const autoBuyConfig: AutoBuyConfig = {
   investCurrencyCode: 'EUR',
   titles: [
     {
-      name: 'LYXOR NASDAQ 100 UCITS',
+      name: 'MULTI NASDAQ 100',
       type: DeGiroProducTypes.etfs,
       size: 5,
     },
