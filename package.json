@@ -39,6 +39,11 @@
     "webpack": "4.44.2",
     "webpack-node-externals": "2.5.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "author": "The serverless webpack authors (https://github.com/elastic-coders/serverless-webpack)",
   "license": "MIT"
 }
