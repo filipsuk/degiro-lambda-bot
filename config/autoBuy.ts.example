@@ -1,7 +1,9 @@
-import { DeGiroProducTypes } from 'degiro-api/dist/enums';
-
 interface AutoBuyConfig {
-  titles: { size: number; name: string; type: DeGiroProducTypes }[];
+  titles: {
+    size: number; // how many contracts you want to buy
+    name: string; // Set this however you want, just for better logs
+    productId: string; // get this id from the url in desktop web app, e.g. "https://trader.degiro.nl/beta-trader/#/products/16143345/overview"
+  }[];
   investCurrencyCode: string;
 }
 
@@ -10,12 +12,12 @@ const autoBuyConfig: AutoBuyConfig = {
   titles: [
     {
       name: 'MULTI NASDAQ 100',
-      type: DeGiroProducTypes.etfs,
+      productId: '15537117',
       size: 5,
     },
     {
-      name: 'VanEck Vectors VideoGaming&eSports UCITS ETF USD A',
-      type: DeGiroProducTypes.etfs,
+      name: 'VanEck Vectors VideoGaming&eSports',
+      productId: '16143345',
       size: 5,
     },
   ],

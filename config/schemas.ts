@@ -1,4 +1,3 @@
-import { DeGiroProducTypes } from 'degiro-api/dist/enums';
 import * as yup from 'yup';
 
 export const configSchema = yup
@@ -8,7 +7,7 @@ export const configSchema = yup
       .array(
         yup.object({
           name: yup.string().required(),
-          type: yup.number().oneOf(Object.values((DeGiroProducTypes as unknown) as number)),
+          productId: yup.string().required(),
           size: yup.number().integer().min(0),
         })
       )

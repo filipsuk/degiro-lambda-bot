@@ -1,16 +1,12 @@
 import type { Handler } from 'aws-lambda';
 import 'source-map-support/register';
 import Big from 'big.js';
+import { SearchProductResultType } from 'degiro-api/dist/types';
 
 import autoBuyConfig from '../config/autoBuy';
 import { configSchema } from '../config/schemas';
 
-import {
-  createLoggedInDegiroInstance,
-  executePermanentMarketOrder,
-  getProductByName,
-  waitSeconds,
-} from './degiroUtils';
+import { createLoggedInDegiroInstance, executePermanentMarketOrder, waitSeconds } from './degiroUtils';
 
 export const handler: Handler = async () => {
   const config = configSchema.validateSync(autoBuyConfig);
@@ -26,12 +22,16 @@ export const handler: Handler = async () => {
 
   let fundsLeft = availableFundsInCurrency.value;
 
-  for (const title of config.titles.filter((value) => value.size > 0)) {
+  const products = ((await degiro.getProductsByIds(config.titles.map((title) => title.productId))) as unknown) as {
+    [id: string]: SearchProductResultType;
+  };
+
+  for (const product of Object.values(products)) {
     try {
-      // Avoid rate-limiting api errors
-      await waitSeconds(1);
-      const product = await getProductByName({ degiroInstance: degiro, name: title.name, type: title.type });
-      console.log(`Buying "${product.name}"...`);
+      const titleConfig = config.titles.find((title) => title.productId === product.id);
+      if (!titleConfig) {
+        throw new Error('Could not match the product from the API to the config productId!');
+      }
 
       if (product.currency !== config.investCurrencyCode) {
         throw new Error(
@@ -39,17 +39,18 @@ export const handler: Handler = async () => {
         );
       }
 
-      const buyMarketValue = Big(product.closePrice).mul(title.size);
+      const buyMarketValue = Big(product.closePrice).mul(titleConfig.size);
       if (buyMarketValue.gt(fundsLeft)) {
-        throw new Error(`Not enough funds left for buying ${title.size} x ${product.name}`);
+        throw new Error(`Not enough funds left for buying ${titleConfig.size} x ${titleConfig.name}`);
       }
 
-      await executePermanentMarketOrder({ degiro, productId: product.id, size: title.size });
+      console.log(`Buying "${product.name}"...`);
+      await executePermanentMarketOrder({ degiro, productId: product.id, size: titleConfig.size });
 
       fundsLeft -= Number(buyMarketValue);
       console.log(`Approx. funds left: ${fundsLeft}`);
     } catch (err) {
-      console.error(`Error while buying "${title.name}"`, err);
+      console.error(`Error while buying "${product.name}"`, err);
     }
   }
 

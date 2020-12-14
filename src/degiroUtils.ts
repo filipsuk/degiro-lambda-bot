@@ -1,37 +1,11 @@
-import { DeGiroActions, DeGiroMarketOrderTypes, DeGiroProducTypes, DeGiroTimeTypes } from 'degiro-api/dist/enums';
+import { DeGiroActions, DeGiroMarketOrderTypes, DeGiroTimeTypes } from 'degiro-api/dist/enums';
 import DeGiro from 'degiro-api';
-import { OrderType, SearchProductResultType } from 'degiro-api/dist/types';
+import { OrderType } from 'degiro-api/dist/types';
 
 export async function createLoggedInDegiroInstance(): Promise<DeGiro> {
   const degiro = new DeGiro();
   await degiro.login();
   return degiro;
-}
-
-export async function getProductByName({
-  degiroInstance,
-  name,
-  type,
-}: {
-  degiroInstance: DeGiro;
-  name: string;
-  type: DeGiroProducTypes;
-}): Promise<SearchProductResultType> {
-  const result = await degiroInstance.searchProduct({
-    text: name,
-    type,
-    limit: 2,
-  });
-
-  if (result.length === 0) {
-    throw new Error(`Product not found "${name}"`);
-  }
-
-  if (result.length > 1) {
-    throw new Error(`More than one product found with name "${name}"`);
-  }
-
-  return result[0];
 }
 
 export async function waitSeconds(seconds: number): Promise<void> {
