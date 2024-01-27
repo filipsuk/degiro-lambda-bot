@@ -1,5 +1,4 @@
 import type { Handler } from 'aws-lambda';
-import 'source-map-support/register';
 import Big from 'big.js';
 import { SearchProductResultType } from 'degiro-api/dist/types';
 
